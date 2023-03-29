@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import FetchContext from '../context/FetchContext';
 
 function FetchProvider({ children }) {
-  const [data, setData] = useState('');
-  const [dataFiltered, setDataFiltered] = useState('');
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,8 +17,6 @@ function FetchProvider({ children }) {
   const values = {
     data,
     setData,
-    dataFiltered,
-    setDataFiltered,
   };
 
   return (
