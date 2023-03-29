@@ -9,10 +9,22 @@ function Filters() {
     setSelectFilters,
     selectedFilters,
     setSelectedFilters,
+    columns,
+    setColumns,
   } = useContext(FiltersContext);
 
-  const arrayColumns = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
+  const changeState = () => {
+    const newArray = columns.filter((column) => column !== selectFilters.column);
+    console.log(newArray);
+    setSelectedFilters([...selectedFilters, selectFilters]);
+    setSelectFilters({
+      column: newArray[0],
+      condition: 'maior que',
+      value: 0,
+    });
+    setColumns([...newArray]);
+    console.log(columns);
+  };
 
   return (
     <div>
@@ -33,11 +45,13 @@ function Filters() {
               { ...selectFilters, column: target.value },
             ) }
           >
-            {arrayColumns.map((column) => (
-              <option value={ column } key={ column }>
-                {column}
-              </option>
-            ))}
+            {
+              columns.map((column) => (
+                <option value={ column } key={ column }>
+                  {column}
+                </option>
+              ))
+            }
           </select>
 
           <select
@@ -64,7 +78,7 @@ function Filters() {
           <button
             data-testid="button-filter"
             type="button"
-            onClick={ () => setSelectedFilters([...selectedFilters, selectFilters]) }
+            onClick={ () => changeState() }
           >
             Filtrar
           </button>

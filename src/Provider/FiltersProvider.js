@@ -10,6 +10,8 @@ function FiltersProvider({ children }) {
     value: 0,
   });
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [columns, setColumns] = useState(['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water']);
 
   const values = {
     searchPlanetInput,
@@ -18,6 +20,8 @@ function FiltersProvider({ children }) {
     setSelectFilters,
     selectedFilters,
     setSelectedFilters,
+    columns,
+    setColumns,
   };
 
   return (

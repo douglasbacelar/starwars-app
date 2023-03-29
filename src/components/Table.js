@@ -4,7 +4,8 @@ import FiltersContext from '../context/FiltersContext';
 
 function Table() {
   const { data } = useContext(FetchContext);
-  const { searchPlanetInput, selectedFilters } = useContext(FiltersContext);
+  const { searchPlanetInput, selectedFilters,
+    setSelectedFilters } = useContext(FiltersContext);
 
   const newData = data.length === 0 ? ''
     : Object.keys(data[0]).filter((key) => key !== 'residents');
@@ -15,7 +16,6 @@ function Table() {
   const allFilters = () => {
     const filteredByName = newArray.filter(({ name }) => name.toUpperCase()
       .includes(searchPlanetInput.toUpperCase()));
-    console.log(selectedFilters);
 
     const filteredByNameAndConditions = filteredByName.filter((filter) => {
       const filterPlanet = selectedFilters.map(({ column, condition, value }) => {
@@ -30,23 +30,36 @@ function Table() {
           return 'true';
         }
       });
-      console.log(filterPlanet);
       return filterPlanet.every((el) => el);
     });
-    console.log(filteredByName);
     return filteredByNameAndConditions;
+  };
+
+  const handleDelete = (deleteColumn) => {
+    console.log(selectedFilters);
+    const newFilters = selectedFilters.filter((param) => param.column !== deleteColumn);
+    setSelectedFilters(newFilters);
+    // setColumns(columns.push(deleteColumn));
+    console.log(selectedFilters);
   };
 
   return (
     <div>
       <div>
         {selectedFilters.map((filter, index) => (
-          <span key={ index }>
+          <span key={ index } data-testid="filter">
+
             {filter.column}
             {' '}
             {filter.condition}
             {' '}
             {filter.value}
+            <button
+              data-testid="delete-btn"
+              onClick={ () => handleDelete(filter.column) }
+            >
+              Excluir
+            </button>
           </span>
         ))}
       </div>
