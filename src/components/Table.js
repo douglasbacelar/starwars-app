@@ -27,7 +27,7 @@ function Table() {
         case 'igual a':
           return Number(filter[column]) === Number(value);
         default:
-          return 'testando';
+          return 'true';
         }
       });
       console.log(filterPlanet);
