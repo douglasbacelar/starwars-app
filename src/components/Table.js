@@ -4,43 +4,23 @@ import FiltersContext from '../context/FiltersContext';
 
 function Table() {
   const { data } = useContext(FetchContext);
-  const { searchPlanetInput, selectedFilters,
-    setSelectedFilters } = useContext(FiltersContext);
+  const { selectedFilters, selectFilters, setSelectedFilters,
+    renderPlanets, columns, setColumns, setSelectFilters } = useContext(FiltersContext);
 
-  const newData = data.length === 0 ? ''
+  const columnWithoutResidents = data.length === 0 ? ''
     : Object.keys(data[0]).filter((key) => key !== 'residents');
 
-  const newArray = data.filter((info) => info.name.toUpperCase()
-    .includes(searchPlanetInput.toUpperCase()));
-
-  const allFilters = () => {
-    const filteredByName = newArray.filter(({ name }) => name.toUpperCase()
-      .includes(searchPlanetInput.toUpperCase()));
-
-    const filteredByNameAndConditions = filteredByName.filter((filter) => {
-      const filterPlanet = selectedFilters.map(({ column, condition, value }) => {
-        switch (condition) {
-        case 'maior que':
-          return Number(filter[column]) > Number(value);
-        case 'menor que':
-          return Number(filter[column]) < Number(value);
-        case 'igual a':
-          return Number(filter[column]) === Number(value);
-        default:
-          return 'true';
-        }
-      });
-      return filterPlanet.every((el) => el);
-    });
-    return filteredByNameAndConditions;
-  };
-
-  const handleDelete = (deleteColumn) => {
-    console.log(selectedFilters);
-    const newFilters = selectedFilters.filter((param) => param.column !== deleteColumn);
+  const handleDelete = (e) => {
+    const newFilters = selectedFilters.filter((param) => param.column !== e.target.value);
     setSelectedFilters(newFilters);
-    // setColumns(columns.push(deleteColumn));
-    console.log(selectedFilters);
+    console.log('columns', columns);
+    console.log('select', selectFilters);
+    console.log('selected', selectedFilters);
+    const newArray = columns.filter((column) => column !== selectFilters.column);
+    console.log('target', e.target.value);
+    console.log('selected', selectedFilters);
+    console.log('newarray', newArray);
+    setColumns([...columns, e.target.value]);
   };
 
   return (
@@ -56,7 +36,8 @@ function Table() {
             {filter.value}
             <button
               data-testid="delete-btn"
-              onClick={ () => handleDelete(filter.column) }
+              value={ filter.column }
+              onClick={ handleDelete }
             >
               Excluir
             </button>
@@ -66,7 +47,7 @@ function Table() {
       <table className="table">
 
         {
-          newData === ''
+          columnWithoutResidents === ''
             ? (
               <span
                 className="rounded-lg bg-white"
@@ -78,29 +59,31 @@ function Table() {
               <>
                 <thead className="hover:bg-white">
                   <tr>
-                    { newData.map((column) => (
+                    { columnWithoutResidents.map((column) => (
                       <th key={ column }>{column}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody />
-                {allFilters().map((types) => (
-                  <tr key={ types.name }>
-                    <td>{types.name}</td>
-                    <td>{types.rotation_period}</td>
-                    <td>{types.orbital_period}</td>
-                    <td>{types.diameter}</td>
-                    <td>{types.climate}</td>
-                    <td>{types.gravity}</td>
-                    <td>{types.terrain}</td>
-                    <td>{types.surface_water}</td>
-                    <td>{types.population}</td>
-                    <td>{types.films}</td>
-                    <td>{types.created}</td>
-                    <td>{types.edited}</td>
-                    <td>{types.url}</td>
-                  </tr>
-                ))}
+                {
+                  renderPlanets.map((types) => (
+                    <tr key={ types.name }>
+                      <td>{types.name}</td>
+                      <td>{types.rotation_period}</td>
+                      <td>{types.orbital_period}</td>
+                      <td>{types.diameter}</td>
+                      <td>{types.climate}</td>
+                      <td>{types.gravity}</td>
+                      <td>{types.terrain}</td>
+                      <td>{types.surface_water}</td>
+                      <td>{types.population}</td>
+                      <td>{types.films}</td>
+                      <td>{types.created}</td>
+                      <td>{types.edited}</td>
+                      <td>{types.url}</td>
+                    </tr>
+                  ))
+                }
               </>
             )
         }

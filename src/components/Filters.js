@@ -15,15 +15,26 @@ function Filters() {
 
   const changeState = () => {
     const newArray = columns.filter((column) => column !== selectFilters.column);
-    console.log(newArray);
+    // console.log('newarray', newArray);
+    // console.log('selected', selectedFilters);
+    // console.log('select', selectFilters);
     setSelectedFilters([...selectedFilters, selectFilters]);
+    // console.log('selected', selectedFilters);
     setSelectFilters({
       column: newArray[0],
       condition: 'maior que',
       value: 0,
     });
+    // console.log('select', selectFilters);
     setColumns([...newArray]);
-    console.log(columns);
+    // console.log('columns', columns);
+  };
+
+  const handleDeleteAll = () => {
+    const originalColumns = ['population', 'orbital_period', 'diameter',
+      'rotation_period', 'surface_water'];
+    setSelectedFilters([]);
+    setColumns(originalColumns);
   };
 
   return (
@@ -81,6 +92,14 @@ function Filters() {
             onClick={ () => changeState() }
           >
             Filtrar
+          </button>
+
+          <button
+            type="button"
+            data-testid="button-remove-filters"
+            onClick={ handleDeleteAll }
+          >
+            Remover todas filtragens
           </button>
         </fieldset>
       </form>
