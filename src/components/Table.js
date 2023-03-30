@@ -4,8 +4,8 @@ import FiltersContext from '../context/FiltersContext';
 
 function Table() {
   const { data } = useContext(FetchContext);
-  const { selectedFilters, selectFilters, setSelectedFilters,
-    renderPlanets, columns, setColumns, setSelectFilters } = useContext(FiltersContext);
+  const { selectedFilters, setSelectedFilters,
+    renderPlanets, columns, setColumns } = useContext(FiltersContext);
 
   const columnWithoutResidents = data.length === 0 ? ''
     : Object.keys(data[0]).filter((key) => key !== 'residents');
@@ -13,13 +13,6 @@ function Table() {
   const handleDelete = (e) => {
     const newFilters = selectedFilters.filter((param) => param.column !== e.target.value);
     setSelectedFilters(newFilters);
-    console.log('columns', columns);
-    console.log('select', selectFilters);
-    console.log('selected', selectedFilters);
-    const newArray = columns.filter((column) => column !== selectFilters.column);
-    console.log('target', e.target.value);
-    console.log('selected', selectedFilters);
-    console.log('newarray', newArray);
     setColumns([...columns, e.target.value]);
   };
 
