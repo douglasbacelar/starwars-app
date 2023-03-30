@@ -15,19 +15,13 @@ function Filters() {
 
   const changeState = () => {
     const newArray = columns.filter((column) => column !== selectFilters.column);
-    // console.log('newarray', newArray);
-    // console.log('selected', selectedFilters);
-    // console.log('select', selectFilters);
     setSelectedFilters([...selectedFilters, selectFilters]);
-    // console.log('selected', selectedFilters);
     setSelectFilters({
       column: newArray[0],
       condition: 'maior que',
       value: 0,
     });
-    // console.log('select', selectFilters);
     setColumns([...newArray]);
-    // console.log('columns', columns);
   };
 
   const handleDeleteAll = () => {
