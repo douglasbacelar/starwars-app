@@ -15,18 +15,14 @@ function Table() {
     setSelectedFilters(newFilters);
     setColumns([...columns, e.target.value]);
   };
+  console.log(renderPlanets);
 
   return (
     <div>
       <div>
         {selectedFilters.map((filter, index) => (
-          <span key={ index } data-testid="filter">
-
-            {filter.column}
-            {' '}
-            {filter.condition}
-            {' '}
-            {filter.value}
+          <li key={ index } data-testid="filter">
+            {`${filter.column} ${filter.condition} ${filter.value}`}
             <button
               data-testid="delete-btn"
               value={ filter.column }
@@ -34,7 +30,7 @@ function Table() {
             >
               Excluir
             </button>
-          </span>
+          </li>
         ))}
       </div>
       <table className="table">
@@ -42,11 +38,11 @@ function Table() {
         {
           columnWithoutResidents === ''
             ? (
-              <span
+              <div
                 className="rounded-lg bg-white"
               >
                 Carregando...
-              </span>
+              </div>
             )
             : (
               <>
@@ -61,7 +57,7 @@ function Table() {
                 {
                   renderPlanets.map((types) => (
                     <tr key={ types.name }>
-                      <td>{types.name}</td>
+                      <td data-testid="planet-name">{types.name}</td>
                       <td>{types.rotation_period}</td>
                       <td>{types.orbital_period}</td>
                       <td>{types.diameter}</td>

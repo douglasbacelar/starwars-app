@@ -14,7 +14,6 @@ function App() {
           <Table />
         </FiltersProvider>
       </FetchProvider>
-      ,
     </div>
   );
 }

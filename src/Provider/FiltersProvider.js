@@ -13,6 +13,10 @@ function FiltersProvider({ children }) {
     condition: 'maior que',
     value: 0,
   });
+  const [selectSort, setselectSort] = useState({
+    column: 'population',
+    sort: 'ASC' });
+  const [sortClicked, setsortClicked] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [renderPlanets, setRenderPlanets] = useState([]);
   const [columns, setColumns] = useState(originalColumns);
@@ -39,6 +43,7 @@ function FiltersProvider({ children }) {
         });
         return filterPlanet.every((el) => el);
       });
+
       return filteredByNameAndConditions;
     };
     setRenderPlanets(allFilters());
@@ -55,6 +60,10 @@ function FiltersProvider({ children }) {
     setColumns,
     renderPlanets,
     setRenderPlanets,
+    selectSort,
+    setselectSort,
+    sortClicked,
+    setsortClicked,
   };
 
   return (
