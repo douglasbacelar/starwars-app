@@ -55,7 +55,6 @@ function Filters() {
   }, [renderPlanets, selectSort.column, setRenderPlanets]);
 
   return (
-
     <form>
       <fieldset>
         <label>
@@ -171,7 +170,6 @@ function Filters() {
         </button>
       </fieldset>
     </form>
-
   );
 }
 

@@ -15,7 +15,6 @@ function Table() {
     setSelectedFilters(newFilters);
     setColumns([...columns, e.target.value]);
   };
-  console.log(renderPlanets);
 
   return (
     <div>
@@ -33,7 +32,9 @@ function Table() {
           </li>
         ))}
       </div>
-      <table className="table">
+      <table
+        className="bg-red-200 flex rounded-xl justify-center"
+      >
 
         {
           columnWithoutResidents === ''
